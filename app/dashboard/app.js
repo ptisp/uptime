@@ -15,6 +15,7 @@ var CheckMonthlyStat = require('../../models/checkMonthlyStat');
 var moduleInfo = require('../../package.json');
 var errorhandler = require('errorhandler');
 var methodOverride = require('method-override');
+var config = require('config');
 
 var app = module.exports = express();
 
@@ -32,7 +33,7 @@ app.use(errorhandler());
 app.use(partials());
 app.use(flash());
 app.use(function locals(req, res, next) {
-  res.locals.route = 'http://' + req.headers.host + '/dashboard';
+  res.locals.route = config.url + '/dashboard/';
   res.locals.addedCss = [];
   res.locals.renderCssTags = function(all) {
     if (all) {
@@ -91,7 +92,7 @@ app.post('/checks', function(req, res, next) {
   check.save(function(err) {
     if (err) return next(err);
     req.flash('info', 'New check has been created');
-    res.redirect('http://' + req.headers.host + '/dashboard' + (req.body.saveandadd ? '/checks/new' : ('/checks/' + check._id + '?type=hour&date=' + Date.now())));
+    res.redirect(config.url + '/dashboard/' + (req.body.saveandadd ? '/checks/new' : ('/checks/' + check._id + '?type=hour&date=' + Date.now())));
   });
 });
 
@@ -152,7 +153,7 @@ app.put('/checks/:id', function(req, res, next) {
     check.save(function(err2) {
       if (err2) return next(err2);
       req.flash('info', 'Changes have been saved');
-      res.redirect('http://' + req.headers.host + '/dashboard' + '/checks/' + req.params.id);
+      res.redirect(config.url + '/dashboard/' + '/checks/' + req.params.id);
     });
   });
 });
@@ -166,7 +167,7 @@ app.delete('/checks/:id', function(req, res, next) {
     check.remove(function(err2) {
       if (err2) return next(err2);
       req.flash('info', 'Check has been deleted');
-      res.redirect('http://' + req.headers.host + '/dashboard' + '/checks');
+      res.redirect(config.url + '/dashboard/' + '/checks');
     });
   });
 });

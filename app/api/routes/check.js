@@ -7,6 +7,7 @@ var CheckEvent       = require('../../../models/checkEvent');
 var CheckHourlyStat  = require('../../../models/checkHourlyStat');
 var CheckDailyStat   = require('../../../models/checkDailyStat');
 var CheckMonthlyStat = require('../../../models/checkMonthlyStat');
+var config = require('config');
 
 /**
  * Check Routes
@@ -64,7 +65,7 @@ module.exports = function(app) {
         tags: req.check.tags,
         message: req.check.isPaused ? 'paused' : 'restarted'
       }).save();
-      res.redirect('http://' + req.headers.host + '/api' + '/checks/' + req.params.id);
+      res.redirect(config.host + '/api' + '/checks/' + req.params.id);
     });
   });
 
