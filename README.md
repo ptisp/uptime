@@ -11,6 +11,7 @@ Original version from [https://github.com/fzaninotto/uptime](https://github.com/
 * MongoDB reconnect
 * Hipchat support
 * Basic auth removed (should be done externally, ex: nginx)
+* Auto separated monitor process
 
 <img src="https://raw.github.com/fzaninotto/uptime/downloads/check_details.png" title="Visualizing the availability of an HTTP check in Uptime" width="50%" valign="top" />
 <img src="https://raw.github.com/fzaninotto/uptime/downloads/check_form.png" title="Editing check attributes (polling interval, slow threshold, alert threshold, pattern to match, tags) in Uptime" width="50%" valign="top" />
