@@ -122,11 +122,9 @@ module.exports = app;
 var monitorInstance;
 
 if (!module.parent) {
-  var serverUrl = url.parse(config.url);
   var port = process.env.PORT || config.port;
-  var host = process.env.HOST || serverUrl.hostname;
   server.listen(port, function() {
-    console.log("Express server listening on host %s, port %d in %s mode", host, port, app.settings.env);
+    console.log("Express server listening on port %d in %s mode", port, app.settings.env);
   });
   server.on('error', function(e) {
     if (monitorInstance) {
