@@ -1,7 +1,17 @@
 uptime
 ======
 
-Original version from [https://github.com/fzaninotto/uptime](https://github.com/fzaninotto/uptime) with improvements, tweaks, refactoring and new functionalities.
+Original version from [https://github.com/fzaninotto/uptime](https://github.com/fzaninotto/uptime), this versions features a few improvements.
+
+Improvements
+--------
+
+* Express v4
+* TCP Pooler
+* MongoDB reconnect
+* Hipchat support
+* Basic auth removed (should be done externally, ex: nginx)
+
 
 A remote monitoring application using Node.js, MongoDB, and Twitter Bootstrap.
 
