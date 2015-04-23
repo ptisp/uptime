@@ -59,7 +59,7 @@ $ node models/migrations/upgrade2to3
 Adding Checks
 -------------
 
-By default, the web UI runs on port 8082, so just browse to 
+By default, the web UI runs on port 8082, so just browse to
 
     http://localhost:8082/
 
@@ -76,7 +76,7 @@ url:        'http://localhost:8082'
 mongodb:
   server:   localhost
   database: uptime
-  user:     root 
+  user:     root
   password:
   connectionString:       # alternative to setting server, database, user and password separately
 
@@ -115,15 +115,6 @@ Architecture
 Uptime is composed of two services: a webapp (in `app.js`), and a polling monitor (in `monitor.js)`. For your convenience, the two services start together when you call `node app`.
 
 <img src="https://raw.github.com/fzaninotto/uptime/downloads/architecture.png" title="Uptime architecture" />
-
-However, heavily browsing the webapp may slow down the whole server - including the polling monitor. In other terms, using the application can influence the uptime measurements. To avoid this effect, it is recommended to run the polling monitor in a separate process.
-
-To that extent, set the `autoStartMonitor` setting to `false` in the `production.yaml`, and launch the monitor by hand:
-
-```sh
-$ node monitor &
-$ node app
-```
 
 You can also run the monitor in a different server. This second server must be able to reach the API of the webapp server: set the `monitor.apiUrl` setting accordingly in the `production.yaml` file of the monitor server.
 
@@ -171,7 +162,7 @@ plugins:
 
 Third-party plugins:
 
- * [`webhooks`](https://github.com/mintbridge/uptime-webhooks): notify events to an URL by sending an HTTP POST request 
+ * [`webhooks`](https://github.com/mintbridge/uptime-webhooks): notify events to an URL by sending an HTTP POST request
  * [`campfire`](https://gist.github.com/dmathieu/5592418): notify events to Campfire
  * [`pushover`](https://gist.github.com/xphyr/5994345): Notify events to mobile devices
 
