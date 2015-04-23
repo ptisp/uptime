@@ -3,8 +3,7 @@ uptime
 
 Original version from [https://github.com/fzaninotto/uptime](https://github.com/fzaninotto/uptime), this versions features a few improvements.
 
-Improvements
---------
+### Improvements
 
 * Express v4
 * TCP Pooler
