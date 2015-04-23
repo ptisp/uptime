@@ -1,42 +1,37 @@
 uptime
 ======
 
+Original version from [https://github.com/fzaninotto/uptime](https://github.com/fzaninotto/uptime) with improvements, tweaks, refactoring and new functionalities.
+
 A remote monitoring application using Node.js, MongoDB, and Twitter Bootstrap.
 
 <img src="https://raw.github.com/fzaninotto/uptime/downloads/check_details.png" title="Visualizing the availability of an HTTP check in Uptime" width="50%" valign="top" />
 <img src="https://raw.github.com/fzaninotto/uptime/downloads/check_form.png" title="Editing check attributes (polling interval, slow threshold, alert threshold, pattern to match, tags) in Uptime" width="50%" valign="top" />
 
-You can watch a [demo screencast on Vimeo](https://vimeo.com/39302164).
-
 Features
 --------
 
-* Monitor thousands of websites (powered by [Node.js asynchronous programming](http://redotheweb.com/2012/01/23/nodejs-for-php-programmers-1-event-driven-programming-and-pasta.html))
+* Monitor websites
 * Tweak frequency of monitoring on a per-check basis, up to the second
 * Check the presence of a pattern in the response body
-* Receive notifications whenever a check goes down
-  * On screen (powered by [socket.io](http://socket.io/))
-  * By email
-  * On the console
-* Record availability statistics for further reporting (powered by [MongoDB](http://www.mongodb.org/))
-* Detailed uptime reports with animated charts (powered by [Flotr2](http://www.humblesoftware.com/flotr2/))
+* Receive notifications
+* Record availability statistics for further reporting
+* Detailed uptime reports with animated charts
 * Monitor availability, responsiveness, average response time, and total uptime/downtime
 * Get details about failed checks (HTTP error code, etc.)
 * Group checks by tags and get reports by tag
-* Familiar web interface (powered by [Twitter Bootstrap 2.0](http://twitter.github.com/bootstrap/index.html))
 * Complete API for integration with third-party monitoring services
-* Powerful plugin system to ease extension and customization
-* Easy installation and zero administration
+* Plugin system to ease extension and customization
 
 Installing Uptime
 -----------------
 
-Uptime 3.2 requires Node.js 0.10 and MongoDB 2.1. Older versions provide compatibility with Node 0.8 (Uptime v3.1) and 0.6 (Uptime v1.4).
+Uptime 3.2 requires Node.js 0.10+ and MongoDB 2.1.
 
 To install from GitHub, clone the repository and install dependencies using `npm`:
 
 ```sh
-$ git clone git://github.com/fzaninotto/uptime.git
+$ git clone git://github.com/ptisp/uptime.git
 $ cd uptime
 $ npm install
 ```
@@ -47,15 +42,6 @@ Lastly, start the application with:
 $ node app
 ```
 
-Upgrading From a 2.0 Install
-----------------------------
-
-If you have been using uptime 1.0 or 2.0, you have to execute the migration script before using the new release.
-
-```sh
-$ node models/migrations/upgrade2to3
-```
-
 Adding Checks
 -------------
 
@@ -63,43 +49,12 @@ By default, the web UI runs on port 8082, so just browse to
 
     http://localhost:8082/
 
-And you're ready to begin. Create your first check by entering an URL, wait for the first ping, and you'll soon see data flowing through your charts!
+And you're ready to begin. Create your first check by entering an URL, wait for the first pass, and you'll soon see data on the charts.
 
 Configuring
 -----------
 
-Uptime uses [node-config](https://github.com/lorenwest/node-config) to allow YAML configuration and environment support. Here is the default configuration, taken from `config/default.yaml`:
-
-```yaml
-url:        'http://localhost:8082'
-
-mongodb:
-  server:   localhost
-  database: uptime
-  user:     root
-  password:
-  connectionString:       # alternative to setting server, database, user and password separately
-
-monitor:
-  name:                   origin
-  apiUrl:                 'http://localhost:8082/api' # must be accessible without a proxy
-  pollingInterval:        10000      # ten seconds
-  timeout:                5000       # five seconds
-  userAgent:              NodeUptime/2.0 (https://github.com/fzaninotto/uptime)
-
-analyzer:
-  updateInterval:         60000      # one minute
-  qosAggregationInterval: 600000     # ten minutes
-  pingHistory:            8035200000 # three months
-
-autoStartMonitor: true
-
-plugins:
-  - ./plugins/console
-  - ./plugins/patternMatcher
-  - ./plugins/httpOptions
-  # - ./plugins/email
-```
+Uptime uses [node-config](https://github.com/lorenwest/node-config) to allow YAML configuration and environment support. Default configuration at `config/default.yaml`:
 
 To modify this configuration, create a `development.yaml` or a `production.yaml` file in the same directory, and override just the settings you need. For instance, to run Uptime on port 80 in production, create a `production.yaml` file as follows:
 
@@ -126,13 +81,7 @@ You can even run several monitor servers in several datacenters to get average r
 Using Plugins
 -------------
 
-Plugins can add more notification types, more poller types, new routes to the webapp, etc. Uptime currently bundles three plugins:
-
- * [`console`](https://github.com/fzaninotto/uptime/blob/master/plugins/console/index.js): log pings and events in the console in real time
- * [`email`](https://github.com/fzaninotto/uptime/blob/master/plugins/email/index.js): notify events (up, down pause) by email
- * [`patternMatcher`](https://github.com/fzaninotto/uptime/blob/master/plugins/patternMatcher/index.js): allow HTTP & HTTPS pollers to test the response body against a pattern
- * [`httpOptions`](https://github.com/fzaninotto/uptime/blob/master/plugins/httpOptions/index.js): add custom HTTP options and headers to HTTP and HTTPS checks (e.g. to allow self-signed certificate on HTTPS, custom headers, custom HTTP methods, ...)
- * [`basicAuth`](https://github.com/fzaninotto/uptime/blob/master/plugins/basicAuth/index.js): add HTTP Basic Access Authentication to the dashboard and API applications
+Plugins can add more notification types, more poller types, new routes to the webapp, etc.
 
 To enable plugins, just add a line to the `plugins:` section of the configuration file.
 Three of the bundled plugins are already enabled by default:
@@ -144,7 +93,6 @@ plugins:
   - ./plugins/patternMatcher
   - ./plugins/httpOptions
   # - ./plugins/email
-  # - ./plugins/basicAuth
 ```
 
 You can override these settings in your environment configuration, for instance:
@@ -157,7 +105,6 @@ plugins:
   - ./plugins/patternMatcher
   - ./plugins/httpOptions
   - ./plugins/email
-  # - ./plugins/basicAuth
 ```
 
 Third-party plugins:
@@ -430,10 +377,6 @@ Parameter :
 
 Ex: `http://localhost:8082/api/tags/good/events?begin=1383260400000&end=1385852399999`
 
-Support and Discussion
-----------------------
-
-Join the [node-uptime](https://groups.google.com/d/forum/node-uptime) Google Group to discuss features, bugs and use cases related to Uptime.
 
 License
 -------
@@ -449,12 +392,3 @@ Uptime uses third-party libraries:
 * [TwitterBootstrap](http://twitter.github.com/bootstrap/), licensed under the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0),
 * [Flotr2](http://www.humblesoftware.com/flotr2/), licensed under the [MIT License](https://github.com/HumbleSoftware/Flotr2/blob/master/LICENSE).
 * [Favicon](http://www.alexpeattie.com/projects/justvector_icons/), distributed under the [Free Art License](http://artlibre.org/licence/lal/en).
-
-If you like the software, please help improving it by contributing PRs on the [GitHub project](https://github.com/fzaninotto/uptime)!
-
-TODO
-----
-
-* Account for scheduled maintenance (and provide two QoS calculations: with and without scheduled maintenance)
-* Allow for JavaScript execution in the monitored resources by using a headless browser (probably zombie.js)
-* Unit tests

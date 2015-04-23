@@ -1,4 +1,0 @@
-mongodb:
-  server:   localhost
-  database: uptime-test
-  user:     root

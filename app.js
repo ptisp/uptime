@@ -47,6 +47,7 @@ app.configure(function() {
   app.set('pollerCollection', new PollerCollection());
 });
 
+
 // load plugins (may add their own routes and middlewares)
 config.plugins.forEach(function(pluginName) {
   var plugin = require(pluginName);
@@ -62,7 +63,6 @@ config.plugins.forEach(function(pluginName) {
   });
 });
 
-app.emit('beforeFirstRoute', app, apiApp);
 
 app.configure('development', function() {
   if (config.verbose) mongoose.set('debug', true);
@@ -124,24 +124,6 @@ io.sockets.on('connection', function(socket) {
       }
     });
   });
-});
-
-// old way to load plugins, kept for BC
-fs.exists('./plugins/index.js', function(exists) {
-  if (exists) {
-    var pluginIndex = require('./plugins');
-    var initFunction = pluginIndex.init || pluginIndex.initWebApp;
-    if (typeof initFunction === 'function') {
-      initFunction({
-        app: app,
-        api: apiApp, // mounted into app, but required for events
-        dashboard: dashboardApp, // mounted into app, but required for events
-        io: io,
-        config: config,
-        mongoose: mongoose
-      });
-    }
-  }
 });
 
 module.exports = app;

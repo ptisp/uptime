@@ -27,7 +27,6 @@ plugins:
   - ./plugins/httpOptions
   # - ./plugins/email
   # - ./plugins/hipchat
-  # - ./plugins/basicAuth
 
 email:
   method:      SMTP  # possible methods are SMTP, SES, or Sendmail
