@@ -5,7 +5,7 @@
  *
  * Installation
  * ------------
- * This plugin is enabled by default. To disable it, remove its entry 
+ * This plugin is enabled by default. To disable it, remove its entry
  * from the `plugins` key of the configuration:
  *
  *   // in config/production.yaml
@@ -14,7 +14,7 @@
  *
  * Usage
  * -----
- * Add the custom HTTP/HTTPS options in the 'HTTP Options' textarea displayed 
+ * Add the custom HTTP/HTTPS options in the 'HTTP Options' textarea displayed
  * in the check Edit page, in YAML format. For instance:
  *
  * method: HEAD

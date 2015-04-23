@@ -4,26 +4,10 @@
 var express    = require('express');
 var Check      = require('../../models/check');
 var CheckEvent = require('../../models/checkEvent');
+var errorhandler = require('errorhandler');
 
 var app = module.exports = express();
-
-var debugErrorHandler = function() {
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-}
-
-// middleware
-app.configure(function(){
-  app.use(app.router);
-});
-
-app.configure('development', debugErrorHandler);
-
-app.configure('test', debugErrorHandler);
-
-app.configure('production', function(){
-  app.use(express.errorHandler());
-});
-
+app.use(errorhandler());
 
 // up count
 var upCount;

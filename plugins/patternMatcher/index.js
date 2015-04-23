@@ -5,7 +5,7 @@
  *
  * Installation
  * ------------
- * This plugin is enabled by default. To disable it, remove its entry 
+ * This plugin is enabled by default. To disable it, remove its entry
  * from the `plugins` key of the configuration:
  *
  *   // in config/production.yaml
@@ -17,7 +17,7 @@
  * Add a pattern to http checks in the dashboard UI.
  * Patterns are regexp, for instance '/hello/i'.
  *
- * When Uptime polls a check with a pattern, it tests the pattern against the 
+ * When Uptime polls a check with a pattern, it tests the pattern against the
  * response body. If the pattern is not found, the check is considered failed.
  */
 var fs   = require('fs');

@@ -53,7 +53,7 @@ module.exports = function(app) {
   app.get('/checks/:id', loadCheck, function(req, res, next) {
     res.json(req.check);
   });
-  
+
   app.get('/checks/:id/pause', loadCheck, function(req, res, next) {
     req.check.togglePause();
     req.check.save(function(err) {
@@ -64,7 +64,7 @@ module.exports = function(app) {
         tags: req.check.tags,
         message: req.check.isPaused ? 'paused' : 'restarted'
       }).save();
-      res.redirect(app.route + '/checks/' + req.params.id);
+      res.redirect('http://' + req.headers.host + '/api' + '/checks/' + req.params.id);
     });
   });
 
@@ -81,14 +81,14 @@ module.exports = function(app) {
       res.json(stat);
     });
   });
-  
+
   app.get('/checks/:id/stats/:type', loadCheck, function(req, res, next) {
     req.check.getStatsForPeriod(req.params.type, req.query.begin, req.query.end, function(err, stats) {
       if(err) return next(err);
       res.json(stats);
     });
   });
-  
+
   app.get('/checks/:id/events', function(req, res, next) {
     var query = {
       check: req.params.id,
