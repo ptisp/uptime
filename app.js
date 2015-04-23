@@ -123,17 +123,7 @@ var monitorInstance;
 
 if (!module.parent) {
   var serverUrl = url.parse(config.url);
-  var port;
-  if (config.server && config.server.port) {
-    console.error('Warning: The server port setting is deprecated, please use the url setting instead');
-    port = config.server.port;
-  } else {
-    port = serverUrl.port;
-    if (port === null) {
-      port = 80;
-    }
-  }
-  var port = process.env.PORT || port;
+  var port = process.env.PORT || config.port;
   var host = process.env.HOST || serverUrl.hostname;
   server.listen(port, function() {
     console.log("Express server listening on host %s, port %d in %s mode", host, port, app.settings.env);
