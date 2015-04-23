@@ -26,9 +26,10 @@ var Hipchatter = require('hipchatter');
 
 
 var roomId = config.roomId;
-var token = config.token;
+var token = config.tokenRoom;
+var tokenh = config.token;
 var uptimeDashboardURL = config.uptimeDashboardURL;
-var hipchatter = new Hipchatter(token);
+var hipchatter = new Hipchatter(tokenh);
 
 exports.initWebApp = function() {
 
@@ -59,9 +60,8 @@ exports.initWebApp = function() {
 
       var payload = {
         'token': token,
-        'color': 'purple',
-        'message': 'Application <a href="' + uptimeDashboardURL + '/dashboard/checks/' + check._id + '">' + check.name + '</a> -> ' + checkEvent.message,
-        'notify': true,
+        'color': 'gray',
+        'message': 'Host <a href="' + uptimeDashboardURL + '/dashboard/checks/' + check._id + '">' + check.name + '</a> -> ' + checkEvent.message,
         'message_format': 'html'
       };
 
