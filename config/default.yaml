@@ -48,7 +48,8 @@ email:
 
 hipchat:
   roomId: 1  # HipChat API Room ID or name (see Hipchatter docs)
-  token: your-hipchat-room-notification-token
+  token: your-hipchat-token
+  tokenRoom: your-hipchat-room-notification-token
   uptimeDashboardURL: https://your-uptime-installation.example.com
   event:
     up:        true
