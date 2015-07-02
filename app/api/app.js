@@ -33,6 +33,10 @@ var refreshUpCount = function(callback) {
   });
 };
 
+setInterval(function() {
+  refreshUpCount(function() {});
+}, 60000);
+
 Check.on('afterInsert', function() { upCount = undefined; });
 Check.on('afterRemove', function() { upCount = undefined; });
 CheckEvent.on('afterInsert', function() { upCount = undefined; });
