@@ -35,7 +35,7 @@ var Check = new Schema({
 Check.plugin(require('mongoose-lifecycle'));
 
 Check.pre('remove', function(next) {
-  async.parallel([this.removePings.bind(this), this.removeEvents.bind(this), this.removeStats.bind(this)], function() {
+  async.parallelLimit([this.removePings.bind(this), this.removeEvents.bind(this), this.removeStats.bind(this)], 2, function() {
     next();
   });
 });
@@ -61,12 +61,12 @@ Check.methods.removeEvents = function(callback) {
 
 Check.methods.removeStats = function(callback) {
   var self = this;
-  async.parallel([
+  async.parallelLimit([
     function(cb) { CheckHourlyStat.remove({ check: self._id }, cb); },
     function(cb) { CheckDailyStat.remove({ check: self._id }, cb); },
     function(cb) { CheckMonthlyStat.remove({ check: self._id }, cb); },
     function(cb) { CheckYearlyStat.remove({ check: self._id }, cb); }
-  ], callback);
+  ], 2, callback);
 };
 
 Check.methods.needsPoll = function() {
